@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Multiplayer NewRatkinPlus Patch</name>
+	<author>Keullaeseu</author>
+	<packageId>keullaeseu.multiplayernewRatkinpluspatch</packageId>
+	<modVersion>1.0.0.0</modVersion>
+	<url>https://github.com/Keullaeseu/Multiplayer-NewRatkinPlus-Patch</url>
+	<description>Provides multiplayer support for the NewRatkinPlus mod by Gloomylynx Nukafrog.</description>
+
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+
+	<loadAfter>
+		<li>rwmt.Multiplayer</li>
+		<li>Solaris.RatkinRaceMod</li>
+	</loadAfter>
+
+	<modDependencies>
+		<li>
+			<packageId>rwmt.Multiplayer</packageId>
+			<displayName>Multiplayer</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2606448745</steamWorkshopUrl>
+			<downloadUrl>https://github.com/rwmt/Multiplayer/releases/latest</downloadUrl>
+		</li>
+		<li>
+			<packageId>Solaris.RatkinRaceMod</packageId>
+			<displayName>NewRatkinPlus</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/1578693166</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+</ModMetaData>
