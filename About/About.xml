@@ -2,7 +2,7 @@
 <ModMetaData>
 	<name>Multiplayer NewRatkinPlus Patch</name>
 	<author>Keullaeseu</author>
-	<packageId>keullaeseu.multiplayernewRatkinpluspatch</packageId>
+	<packageId>keullaeseu.mp.Solaris.RatkinRaceMod</packageId>
 	<modVersion>1.0.0.0</modVersion>
 	<url>https://github.com/Keullaeseu/Multiplayer-NewRatkinPlus-Patch</url>
 	<description>Provides multiplayer support for the NewRatkinPlus mod by Gloomylynx Nukafrog.</description>
@@ -13,6 +13,8 @@
 
 	<loadAfter>
 		<li>rwmt.Multiplayer</li>
+		<li>erdelf.HumanoidAlienRaces</li>
+		<li>keullaeseu.mp.erdelf.HumanoidAlienRaces</li>
 		<li>Solaris.RatkinRaceMod</li>
 	</loadAfter>
 
@@ -22,6 +24,16 @@
 			<displayName>Multiplayer</displayName>
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2606448745</steamWorkshopUrl>
 			<downloadUrl>https://github.com/rwmt/Multiplayer/releases/latest</downloadUrl>
+		</li>
+		<li>
+			<packageId>erdelf.HumanoidAlienRaces</packageId>
+			<displayName>Humanoid Alien Races</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/839005762</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>keullaeseu.mp.erdelf.HumanoidAlienRaces</packageId>
+			<displayName>Multiplayer Humanoid Alien Races Patch</displayName>
+			<downloadUrl>https://github.com/Keullaeseu/Multiplayer-Humanoid-Alien-Races-Patch/releases/latest</downloadUrl>
 		</li>
 		<li>
 			<packageId>Solaris.RatkinRaceMod</packageId>
