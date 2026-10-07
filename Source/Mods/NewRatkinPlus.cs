@@ -7,12 +7,12 @@ namespace MultiplayerNewRatkinPlusPatch.Source.Mods;
 /// <summary>
 ///     Multiplayer Patch for NewRatkinPlus by Gloomylynx Nukafrog,
 ///     Last Update: 20 May @ 5:01pm 2026
+///     <see href="https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166" />
 /// </summary>
-/// <see href="https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166" />
 [MpCompatFor("Solaris.RatkinRaceMod")]
 public partial class NewRatkinPlus
 {
-    internal const string LogPrefix = "[Multiplayer NewRatkinPlus Patch]";
+    private const string LogPrefix = "[Multiplayer NewRatkinPlus Patch]";
 
     // Cached reflection for Dialog_CaravanSettlers UI list cleanup (populated in caravan partial)
     private static AccessTools.FieldRef<object, List<Pawn>> caravanSettlersListField;
@@ -69,6 +69,24 @@ public partial class NewRatkinPlus
         catch (Exception exception)
         {
             Log.Error($"{LogPrefix} Failed to patch EMP incident: {exception}");
+        }
+
+        try
+        {
+            PatchCombatRng();
+        }
+        catch (Exception exception)
+        {
+            Log.Error($"{LogPrefix} Failed to patch combat RNG: {exception}");
+        }
+
+        try
+        {
+            PatchStylingGenes();
+        }
+        catch (Exception exception)
+        {
+            Log.Error($"{LogPrefix} Failed to patch styling genes: {exception}");
         }
 
         Log.Message($"{LogPrefix} Initialized.");

@@ -1,3 +1,4 @@
+using System.Reflection;
 using HarmonyLib;
 using Multiplayer.API;
 using Multiplayer.Compat;
@@ -50,11 +51,61 @@ public partial class NewRatkinPlus
             return;
         }
 
-        // Lambda is Action<LocalTargetInfo> operating on Find.Selector.SelectedPawns.
-        // MapSelected restores selection on all clients during sync execution.
+        // GetFaceDirectionGizmos is a private iterator with 7 lambdas in source order:
+        // 0: Action<LocalTargetInfo> (Command_Target.action, the sync target),
+        // 1-6: Func<> LINQ predicates for drafted/dead/busy/cooldown checks.
+        // Resolve by delegate signature instead of bare ordinal so LINQ reorderings
+        // do not silently sync the wrong lambda. Falls back to ordinal 0.
+        var shieldAction = ResolveShieldFaceAction(shieldType);
+        if (shieldAction == null)
+        {
+            Log.Warning($"{LogPrefix} Could not resolve CompShieldFaceDirection face action, skipping shield sync.");
+            return;
+        }
+
+        // MapSelected restores Find.Selector.SelectedPawns on all clients during sync execution.
         // The lambda itself is non-capturing (static helpers only), so Method is appropriate.
-        MpCompat.RegisterLambdaMethod(shieldType, "GetFaceDirectionGizmos", 0)
-            .SetContext(SyncContext.MapSelected);
-        Log.Message($"{LogPrefix} Synced CompShieldFaceDirection.GetFaceDirectionGizmos lambda 0.");
+        MP.RegisterSyncMethod(shieldAction).SetContext(SyncContext.MapSelected);
+        Log.Message(
+            $"{LogPrefix} Synced CompShieldFaceDirection.GetFaceDirectionGizmos face action ({shieldAction.DeclaringType?.Name}.{shieldAction.Name}).");
+    }
+
+    private static MethodInfo ResolveShieldFaceAction(Type shieldType)
+    {
+        for (var ordinal = 0; ordinal <= 15; ordinal++)
+        {
+            MethodInfo candidate;
+            try
+            {
+                candidate = MpMethodUtil.GetLambda(shieldType, "GetFaceDirectionGizmos", MethodType.Normal, null,
+                    ordinal);
+            }
+            catch (Exception exception)
+            {
+                // No more lambdas at higher ordinals; stop scanning.
+                // Ordinal 0 must exist, so reaching here with ordinal 0 means parent lookup failed.
+                Log.Warning($"{LogPrefix} Shield lambda scan stopped at ordinal {ordinal}: {exception.Message}");
+                break;
+            }
+
+            if (candidate == null) continue;
+
+            var parameters = candidate.GetParameters();
+            if (candidate.ReturnType == typeof(void)
+                && parameters.Length == 1
+                && parameters[0].ParameterType == typeof(LocalTargetInfo))
+                return candidate;
+        }
+
+        // Fallback: original ordinal-0 assumption (verified against 1.6 source).
+        try
+        {
+            return MpMethodUtil.GetLambda(shieldType, "GetFaceDirectionGizmos");
+        }
+        catch (Exception exception)
+        {
+            Log.Warning($"{LogPrefix} Shield fallback ordinal 0 failed: {exception.Message}");
+            return null;
+        }
     }
 }

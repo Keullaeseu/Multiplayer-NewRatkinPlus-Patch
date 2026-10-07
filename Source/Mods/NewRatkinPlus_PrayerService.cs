@@ -63,7 +63,8 @@ public partial class NewRatkinPlus
 
             // Pick pulpit + spot + cooldown locally (UI context), then sync the chosen values.
             // This avoids per-client Rand divergence for RandomElement / RandomInRange.
-            if (!TryPickPrayerSpotLocal(organizer, out var pulpit, out var spot)) return false;
+            // Uses the original TryFindGatherSpot so filter logic never drifts from the mod.
+            if (!TryPickPrayerSpotLocal(__instance, organizer, out var pulpit, out var spot)) return false;
 
             var cooldownTicks = ability.def.cooldownTicksRange.RandomInRange;
             SyncedPrayService(organizer, pulpit, spot, cooldownTicks);
@@ -96,13 +97,46 @@ public partial class NewRatkinPlus
         return pawnField?.GetValue(commandInstance) as Pawn;
     }
 
-    private static bool TryPickPrayerSpotLocal(Pawn organizer, out Building pulpit, out IntVec3 spot)
+    private static bool TryPickPrayerSpotLocal(object commandInstance, Pawn organizer, out Building pulpit,
+        out IntVec3 spot)
     {
         pulpit = null;
         spot = IntVec3.Invalid;
 
         if (organizer?.Map == null) return false;
 
+        // Primary: call the mod's own protected TryFindGatherSpot(Pawn, out Building, out IntVec3)
+        // so filtering + RandomElement logic always matches the mod version.
+        try
+        {
+            var commandType = commandInstance?.GetType() ??
+                              AccessTools.TypeByName("NewRatkin.Command_AbilityPrayService");
+            var tryFindSpot =
+                AccessTools.DeclaredMethod(commandType, "TryFindGatherSpot")
+                ?? AccessTools.Method(commandType, "TryFindGatherSpot");
+            if (tryFindSpot != null)
+            {
+                var args = new object[] { organizer, null, IntVec3.Invalid };
+                var found = (bool)tryFindSpot.Invoke(commandInstance, args);
+                if (found)
+                {
+                    pulpit = args[1] as Building;
+                    spot = args[2] is IntVec3 foundSpot ? foundSpot : IntVec3.Invalid;
+                    if (pulpit != null && spot.IsValid) return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        catch (Exception exception)
+        {
+            Log.Warning(
+                $"{LogPrefix} Original TryFindGatherSpot call failed, using fallback filter: {exception.Message}");
+        }
+
+        // Fallback: duplicate of TryFindGatherSpot filter (kept only if reflection fails).
         var pulpitDef = DefDatabase<ThingDef>.GetNamedSilentFail("RK_Pulpit");
         if (pulpitDef == null) return false;
 
