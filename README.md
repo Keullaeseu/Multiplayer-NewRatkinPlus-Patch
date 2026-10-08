@@ -15,6 +15,9 @@ This mod is designed to improve multiplayer synchronization when playing with th
 - RimWorld Multiplayer
   - [GitHub version](https://github.com/rwmt/Multiplayer) or [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2606448745) version
 - [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166)
+- [Humanoid Alien Races](https://steamcommunity.com/sharedfiles/filedetails/?id=839005762) (NewRatkinPlus dependency)
+- [Multiplayer Humanoid Alien Races Patch](https://github.com/Keullaeseu/Multiplayer-Humanoid-Alien-Races-Patch/releases/latest)
+  — required: covers the styling station and alien-comp appearance sync for HAR races including Ratkin.
 
 The host and every connected player must use compatible versions of all required mods.
 
@@ -28,10 +31,12 @@ Subscribe to the required mods and add them to your RimWorld mod list in the fol
 2. Core
 3. Royalty, Ideology, Biotech, and Anomaly, if applicable
 4. RimWorld Multiplayer
-5. [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166)
-6. [Multiplayer NewRatkinPlus Patch](https://github.com/Keullaeseu/Multiplayer-NewRatkinPlus-Patch/releases/latest)
+5. [Humanoid Alien Races](https://steamcommunity.com/sharedfiles/filedetails/?id=839005762)
+6. [Multiplayer Humanoid Alien Races Patch](https://github.com/Keullaeseu/Multiplayer-Humanoid-Alien-Races-Patch/releases/latest)
+7. [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166)
+8. [Multiplayer NewRatkinPlus Patch](https://github.com/Keullaeseu/Multiplayer-NewRatkinPlus-Patch/releases/latest)
 
-The patch should load after both RimWorld Multiplayer and [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166).
+The patch should load after RimWorld Multiplayer, [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166), and the companion patch listed above.
 
 ### Manual Installation
 
@@ -48,7 +53,9 @@ All players should have the following mods installed and enabled:
 - RimWorld Multiplayer
 - [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166)
 - [Multiplayer NewRatkinPlus Patch](https://github.com/Keullaeseu/Multiplayer-NewRatkinPlus-Patch/releases/latest)
-- All required NewRatkinPlus dependencies
+- [Humanoid Alien Races](https://steamcommunity.com/sharedfiles/filedetails/?id=839005762)
+- [Multiplayer Humanoid Alien Races Patch](https://github.com/Keullaeseu/Multiplayer-Humanoid-Alien-Races-Patch/releases/latest)
+- All other required NewRatkinPlus dependencies
 
 The host and all connected clients should use the same:
 
@@ -56,6 +63,7 @@ The host and all connected clients should use the same:
 - RimWorld Multiplayer version
 - NewRatkinPlus version
 - Multiplayer NewRatkinPlus Patch version
+- Multiplayer Humanoid Alien Races Patch version
 - Mod configuration
 - Mod load order
 
@@ -63,7 +71,12 @@ Do not add, remove, update, or reorder mods while players are connected to the s
 
 ## Compatibility
 
-This patch is intended to provide multiplayer compatibility for [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166).
+This patch is intended to provide multiplayer compatibility for [NewRatkinPlus](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166)
+itself (weapon gizmo toggles, shield face direction, prayer service ability,
+caravan settler accepts, EMP incident map fix, ChainSword RNG, Ratkin ear
+styling dummy support).
+Humanoid Alien Races styling is covered by the required companion patch
+listed above, not duplicated here.
 
 It does not replace:
 
@@ -79,5 +92,7 @@ It does not replace:
 
 - [RimWorld Multiplayer on GitHub](https://github.com/rwmt/Multiplayer)
 - [RimWorld Multiplayer on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2606448745)
+- [Humanoid Alien Races](https://steamcommunity.com/sharedfiles/filedetails/?id=839005762)
+- [Multiplayer Humanoid Alien Races Patch](https://github.com/Keullaeseu)
 - [NewRatkinPlus on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=1578693166)
 - [Multiplayer NewRatkinPlus Patch](https://github.com/Keullaeseu)
